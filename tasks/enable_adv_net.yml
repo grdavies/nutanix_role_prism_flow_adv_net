@@ -1,0 +1,63 @@
+---
+# tasks file for check_prereqs.yml
+
+- name: Get current Flow advanced networking controllers
+  uri:
+    url: "https://{{nutanix_host}}:{{nutanix_port}}/api/networking/v2.1.a1/config/controllers"
+    method: GET
+    validate_certs: "{{ validate_certs }}"
+    status_code: 200
+    headers:
+      Authorization: "{{ nutanix_api_auth }}"
+  register: nutanix_flow_adv_net_get_controllers
+
+- name: Debug nutanix_flow_adv_net_get_controllers.json
+  debug:
+    var: nutanix_flow_adv_net_get_controllers.json
+  when:
+    - nutanix_debug
+
+- name: Enable Flow advanced networking controllers
+  uri:
+    url: "https://{{nutanix_host}}:{{nutanix_port}}/api/networking/v2.1.a1/config/controllers"
+    body: "{}"
+    method: POST
+    validate_certs: "{{ validate_certs }}"
+    body_format: json
+    status_code: 201
+    headers:
+      Authorization: "{{ nutanix_api_auth }}"
+  register: nutanix_flow_adv_net_enable_controllers
+
+- name: Debug nutanix_flow_adv_net_enable_controllers.json
+  debug:
+    var: nutanix_flow_adv_net_enable_controllers.json
+  when:
+    - nutanix_debug
+
+- name: Wait for Flow advanced networking task to complete
+  block:
+    - name: Checking Flow advanced networking task status
+      uri:
+        url: "https://{{nutanix_host}}:{{nutanix_port}}/PrismGateway/services/rest/v2.0/tasks/{{ nutanix_flow_adv_net_enable_controllers.json.data.extId }}"
+        method: GET
+        validate_certs: "{{ validate_certs }}"
+        status_code: 200
+        headers:
+          Authorization: "{{ nutanix_api_auth }}"
+      register: prism_flow_adv_net_enable_task_status
+      until: prism_flow_adv_net_enable_task_status.json.progress_status == 'Succeeded' or prism_flow_adv_net_enable_task_status.json.progress_status == 'Failed'
+      retries: 30
+      delay: 120
+
+- name: Debug prism_flow_adv_net_enable_task_status
+  debug:
+    var: prism_flow_adv_net_enable_task_status.json
+  when:
+    - nutanix_debug
+
+- name: Checking Flow advanced networking task failed
+  ansible.builtin.fail:
+    msg: "Flow advanced networking task failed. {{ prism_flow_adv_net_enable_task_status.json.message }}"
+  when:
+    - prism_flow_adv_net_enable_task_status.json.progress_status == 'Failed'

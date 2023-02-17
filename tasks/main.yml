@@ -1,0 +1,11 @@
+---
+# tasks file for nutanix_role_prism_flow_adv_net
+- include_tasks: setup_api.yml
+
+- name: Check Flow Advanced Networking Pre-Reqs
+  include_tasks: check_prereqs.yml
+
+- name: Enable Flow Advanced Networking
+  include_tasks: enable_adv_net.yml
+  when:
+    - enable_flow_adv_net
