@@ -1,38 +1,45 @@
-Role Name
-=========
+# Nutanix Role to enable Flow Advanced Networking on Prism Central
 
-A brief description of the role goes here.
+This Ansible role enables Flow Advanced Networking on Prism Central.
 
-Requirements
-------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Role Variables
 
-Role Variables
---------------
+| Variable                                          | Required | Default | Choices                   | Comments                                                                                               |
+|---------------------------------------------------|----------|---------|---------------------------|--------------------------------------------------------------------------------------------------------|
+| nutanix_pulse_host                                | yes      |         |                           | The IP address or FQDN for the Prism (Element or Central) where you want to configure pulse.           |
+| nutanix_pulse_username                            | no       | "admin" |                           | A valid username with appropriate rights to access the Nutanix API. where you want to configure pulse. |
+| nutanix_pulse_password                            | yes      |         |                           | A valid password for the supplied username.  where you want to configure pulse.                        |
+| nutanix_pulse_port                                | no       | 9440    |                           | The Prism TCP port  where you want to configure pulse.                                                 |
+| validate_certs                                    | no       | no      | yes / no                  | Whether to check if Prism UI certificates are valid.                                                   |
+| nutanix_debug                                     | no       | no      | yes / no                  | Whether to output variable contents for debugging purposes.                                            |
+| enable_flow_adv_net                               | no       | no      | yes / no                  | Set value to 'yes' to enable Flow Advanced Networking.                                                 |
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
-Dependencies
-------------
+## Dependencies
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None
 
-Example Playbook
-----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+## Example Playbook
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```
+- hosts: localhost
+  gather_facts: false
+  roles:
+    - role: grdavies.nutanix_role_prism_flow_adv_net
+  vars:
+    nutanix_host: 10.38.179.39
+    nutanix_username: admin
+    nutanix_password: nx2Tech283!
+    enable_flow_adv_net: yes
+```
 
-License
--------
 
-BSD
+## License
 
-Author Information
-------------------
+See LICENSE.md
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+## Author Information
+
+Ross Davies
