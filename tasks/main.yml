@@ -4,7 +4,7 @@
 
 - name: "Task can only be run against Prism Central"
   ansible.builtin.fail:
-    msg: "{{nutanix_host}} is not a Prism Central instance. Please check the nutanix_host variable and try again."
+    msg: "'nutanix_host' needs to be set to the IP or VIP of Prism Central. Please check the nutanix_host variable and try again."
   when:
     - nutanix_endpoint_prism_type != 'pc'
 
