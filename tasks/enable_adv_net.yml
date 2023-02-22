@@ -19,7 +19,7 @@
 
 - name: Enable Flow advanced networking controllers
   uri:
-    url: "https://{{nutanix_host}}:{{nutanix_port}}/api/networking/v2.1.a1/config/controllers"
+    url: "https://{{ nutanix_host }}:{{ nutanix_port }}/api/networking/v2.1.a1/config/controllers"
     body: "{}"
     method: POST
     validate_certs: "{{ validate_certs }}"
