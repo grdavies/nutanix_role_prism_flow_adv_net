@@ -3,7 +3,7 @@
 
 - name: Get current CMSP configuration
   uri:
-    url: "https://{{nutanix_host}}:{{nutanix_port}}/PrismGateway/services/rest/v1/genesis"
+    url: "https://{{ nutanix_host }}:{{ nutanix_port }}/PrismGateway/services/rest/v1/genesis"
     body:
       value: '{".oid":"ClusterManager",".method":"get_cmsp_status",".kwargs":{}}'
     method: POST
@@ -14,7 +14,8 @@
       Authorization: "{{ nutanix_api_auth }}"
   register: nutanix_cmsp_current_state
 
-- set_fact:
+- name: Set nutanix_cmsp_current_state_result_value
+  set_fact:
     nutanix_cmsp_current_state_result_value: "{{ nutanix_cmsp_current_state.json | community.general.json_query(query) | to_json | from_json }}"
   vars:
     query: "value"
