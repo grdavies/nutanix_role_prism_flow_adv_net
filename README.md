@@ -7,13 +7,13 @@ This Ansible role enables Flow Advanced Networking on Prism Central.
 
 | Variable                                          | Required | Default | Choices                   | Comments                                                                                               |
 |---------------------------------------------------|----------|---------|---------------------------|--------------------------------------------------------------------------------------------------------|
-| nutanix_pulse_host                                | yes      |         |                           | The IP address or FQDN for the Prism (Element or Central) where you want to configure pulse.           |
-| nutanix_pulse_username                            | no       | "admin" |                           | A valid username with appropriate rights to access the Nutanix API. where you want to configure pulse. |
-| nutanix_pulse_password                            | yes      |         |                           | A valid password for the supplied username.  where you want to configure pulse.                        |
-| nutanix_pulse_port                                | no       | 9440    |                           | The Prism TCP port  where you want to configure pulse.                                                 |
+| nutanix_host                                      | yes      |         |                           | The IP address or FQDN for the Prism Centra) where you want to enable the service.                     |
+| nutanix_username                                  | no       | "admin" |                           | A valid username with appropriate rights to access the Nutanix API.                                    |
+| nutanix_password                                  | yes      |         |                           | A valid password for the supplied username.                                                            |
+| nutanix_port                                      | no       | 9440    |                           | The Prism TCP port                                                                                     |
 | validate_certs                                    | no       | no      | yes / no                  | Whether to check if Prism UI certificates are valid.                                                   |
 | nutanix_debug                                     | no       | no      | yes / no                  | Whether to output variable contents for debugging purposes.                                            |
-| enable_flow_adv_net                               | no       | no      | yes / no                  | Set value to 'yes' to enable Flow Advanced Networking.                                                 |
+| nutanix_flow_adv_net_enable                       | yes      |         | yes / no                  | Set value to 'yes' to enable Flow Advanced Networking.                                                 |
 
 
 ## Dependencies
