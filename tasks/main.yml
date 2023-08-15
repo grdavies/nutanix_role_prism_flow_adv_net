@@ -10,8 +10,10 @@
 
 - name: Check Flow Advanced Networking Pre-Reqs
   include_tasks: check_prereqs.yml
+  when:
+    - nutanix_flow_adv_net_enable | default(False)
 
 - name: Enable Flow Advanced Networking
-  include_tasks: enable_adv_net.yml
+  include_tasks: enable_feature.yml
   when:
-    - enable_flow_adv_net
+    - nutanix_flow_adv_net_enable | default(False)
